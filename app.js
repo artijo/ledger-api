@@ -15,8 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-console.log(process.env.MONGO_URI);
-
 //Connect to database
 const connectDB = async () => {
     try {
