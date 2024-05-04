@@ -25,7 +25,13 @@ const newLedger = async (req, res) => {
 }
 
 const getbyuser = async (req, res) => {
+    const type = req.query.type;
     try {
+        if (type == 'income' || type == 'expense') {
+            let data = await Ledger.find({ user: req.user._id, type });
+            res.json(data);
+            return;
+        }
         let user = await User.findById(req.user._id).populate('Ledger');
         res.json(user.Ledger);
     }
