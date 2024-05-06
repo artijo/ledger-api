@@ -7,6 +7,7 @@ const {checkAuth} = require('../Middleware/Auth');
 
 router.post('/ledgers',checkAuth, ledgerController.newLedger);
 router.get('/ledgers',checkAuth, ledgerController.getbyuser);
+router.get('/ledgers/overview',checkAuth, ledgerController.overview);
 
 
 module.exports = {
