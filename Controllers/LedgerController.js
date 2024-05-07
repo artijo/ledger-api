@@ -97,6 +97,7 @@ const getthismonth = async (req, res) => {
     ]
     */
     try {
+        //query database at current month only
         let user = await User.findById(req.user._id).populate('Ledger');
         let thismonth = new Date();
         let data = [];
