@@ -85,8 +85,51 @@ const overview = async (req, res) => {
     }
 }
 
+const getthismonth = async (req, res) => {
+    //get the current month
+    //return the income and expense of the current month with day as array of objects with date and amount
+    /*
+    [
+        {date:1,income:100,expense:50},
+        {date:2,income:100,expense:50},
+        {date:3,income:0,expense:0},
+        ...
+    ]
+    */
+    try {
+        let user = await User.findById(req.user._id).populate('Ledger');
+        let thismonth = new Date();
+        let data = [];
+        for (let i = 1; i <= 31; i++) {
+            let day = i;
+            let income = 0;
+            let expense = 0;
+            user.Ledger.forEach(ledger => {
+                if (ledger.date.getDate() === day &&
+                    ledger.date.getMonth() === thismonth.getMonth() &&
+                    ledger.date.getFullYear() === thismonth.getFullYear()) {
+                    if (ledger.type === 'income') {
+                        income += ledger.amount;
+                    }
+                    else {
+                        expense += ledger.amount;
+                    }
+                }
+            });
+            data.push({ day, income, expense });
+        }
+        res.json(data);
+    }
+    catch (error) {
+        res.json({ message: error.message }).status(500);
+    }
+
+}
+
+
 module.exports = {
     newLedger,
     getbyuser,
-    overview
+    overview,
+    getthismonth
 }
