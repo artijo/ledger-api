@@ -56,7 +56,6 @@ const overview = async (req, res) => {
         //today expense
         let today = new Date();
         let todayexpense = 0;
-        console.log(user.Ledger);
         user.Ledger.forEach(ledger => {
             if (ledger.type === 'expense') {
                 if (ledger.date.getDate() === today.getDate() &&
