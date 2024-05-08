@@ -1,14 +1,17 @@
 const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 
-function loginwithgoogle(req, res) {
-    const user = User.findOne({email: req.body.email});
+async function loginwithgoogle(req, res) {
+    const user = await User.findOne({email: req.body.email});
+    console.log(user);
     if (!user) {
-        const newUser = new User(req.body);
-        newUser.save();
+        // const newUser = new User(req.body);
+        // newUser.save();
+        return res.status(400).json({status:"error",error:"User doesn't exist"});
     }
-    const token = jwt.sign({email: req.body.email}, process.env.TOKEN_SECRET);
-    res.json({status:"ok",token: token});
+        const token = jwt.sign({email: req.body.email}, process.env.TOKEN_SECRET);
+        res.json({status:"ok",token: token});
+    
 }
 
 module.exports = {
