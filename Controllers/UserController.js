@@ -22,7 +22,7 @@ const create = async (req, res) => {
     try{
         let user = new User(req.body);
         await user.save();
-        res.json(user);
+        res.status(201).json(user);
     } catch (error) {
         res.json({message: error.message}).status(500);
     }

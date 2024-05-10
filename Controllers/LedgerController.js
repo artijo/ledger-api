@@ -17,7 +17,7 @@ const newLedger = async (req, res) => {
         ];
         user.Ledger = userledgers;
         await user.save();
-        res.json(ledger);
+        res.status(201).json(ledger);
     }
     catch (error) {
         res.json({ message: error.message }).status(500);
